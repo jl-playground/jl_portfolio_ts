@@ -4,18 +4,23 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 env:
-  IMAGE: jl115/portfolio:${{ github.sha }}
+  IMAGE: jl115/my-app:${{ github.sha }}
   CONFIG_PATH: ./k8s
-  KUBERNETES_NAMESPACE: portfolio
-  APP_NAME: portfolio
+  KUBERNETES_NAMESPACE: my-namespace
+  APP_NAME: my-app
   BASE_URL: joelleimbacher.tech
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
 jobs:
   build-and-deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: self-hosted
     name: Build and Deploy to Kubernetes
 
@@ -41,11 +46,10 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Write kubeconfig file
-        run: |
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig
-          chmod 600 kubeconfig
-        # wichtig: die Datei ist nötig für den nächsten Schritt
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v3
+        with:
+          kubeconfig: ${{ env.KUBECONFIG }}
 
       - name: Replace and Apply Kubernetes Manifests
         uses: swdotcom/update-and-apply-kubernetes-configs@v1
