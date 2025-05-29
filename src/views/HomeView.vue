@@ -1,26 +1,24 @@
 <template>
-  <div>
+  <div class="home-view">
     Hi my name is: {{ userProfile.getName() }} <br />
     and I'm {{ userProfile.getAbout() }}
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, defineComponent } from 'vue'
 import { Profile } from '@/models/Profile'
 
-export default defineComponent({
-  name: 'ParentComponent',
-  components: {},
-  setup() {
-    // Load initial profile instance
-    const userProfile = ref<Profile>(Profile.getInstance())
+// Load initial profile instance
+const userProfile = ref<Profile>(Profile.getInstance())
 
-    return {
-      userProfile
-    }
-  }
-})
+defineExpose([userProfile])
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home-view {
+  width: 70%;
+  padding: 20px;
+  font-size: 1.2em;
+}
+</style>

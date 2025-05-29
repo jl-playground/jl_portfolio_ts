@@ -57,11 +57,8 @@ export default {
     const showDrawer = ref(true)
     const home = ref({ icon: 'pi pi-home', url: '/' })
     const items = ref<PanelMenuItem[]>([])
-
     onMounted(() => {
       userProfile.value = Profile.getInstance()
-      console.log('\x1b[33m%s\x1b[0m', 'userProfile.value --------------------', userProfile.value)
-
       // Transform user data to MegaMenu items
       items.value = [
         {
@@ -213,7 +210,7 @@ export default {
   grid-template-columns: 0.5fr 10fr;
   grid-template-areas:
     'header header'
-    'sidebar main-content-area'
+    'main-content-area main-content-area'
     'footer footer';
   height: 100vh;
   width: 100vw;
@@ -222,7 +219,8 @@ export default {
 
 .persistent-drawer {
   position: relative;
-  width: 250px; /* Adjust width as needed */
+  width: 250px;
+  /* Adjust width as needed */
   height: 100vh;
   z-index: auto;
 }
@@ -254,15 +252,18 @@ nav {
   margin-top: 2rem;
   padding-bottom: 1rem;
 }
+
 div a {
   display: inline-block;
   font-size: 1.5rem;
   padding: 0 1rem;
   border-bottom: 1px solid var(--color-border);
 }
+
 div a:hover {
   border-radius: 0.5rem;
 }
+
 nav a.router-link-exact-active {
   color: var(--color-text);
 }
@@ -276,8 +277,11 @@ nav a:first-of-type {
 }
 
 .sidebar {
-  grid-area: sidebar;
+  position: fixed;
   display: flex;
+  top: auto;
+  left: 0;
+  bottom: 50%;
   flex-direction: column;
   justify-content: center;
   align-items: start;
@@ -289,6 +293,9 @@ nav a:first-of-type {
 .main-content-area {
   grid-area: main-content-area;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   /* background-color: blue; */
   margin: 1rem 1rem 1rem 0;
   border-radius: 1rem;
@@ -301,19 +308,23 @@ nav a:first-of-type {
   position: relative;
   /* margin-bottom: 1rem; */
   height: 6rem;
+
   .dock {
     position: relative;
     height: 100%;
     margin-bottom: 1rem;
   }
+
   .p-dock-mobile {
     width: fit-content;
     margin-bottom: 1rem;
   }
+
   :deep(.p-dock-list-container) {
-    background-color: rgba(7, 41, 30, 0.202);
+    background-color: rgba(16, 24, 21, 0.5);
   }
 }
+
 :deep(.p-megamenu-mobile) .p-megamenu-root-list {
   display: contents;
 }
