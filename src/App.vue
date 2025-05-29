@@ -3,30 +3,30 @@
     <!-- *HEADER -->
     <header class="header">
       <div class="card">
-        <router-link to="/profile">Joël Leimbacher</router-link>
+        <router-link to="/">Joël Leimbacher</router-link>
       </div>
     </header>
     <!-- *SIDEBAR -->
-    <aside class="sidebar">
-      <div class="panel-container card flex justify-center">
-        <MegaMenu :model="items" orientation="vertical">
-          <template #itemicon="{ item }">
-            <i :class="item.icon" style="font-size: 1.5em"></i>
-          </template>
-        </MegaMenu>
-      </div>
-    </aside>
+
+    <div class="panel-container card flex justify-center persistent-drawer">
+      <MegaMenu :model="items" orientation="vertical">
+        <template #itemicon="{ item }">
+          <i :class="item.icon" style="font-size: 1.5em"></i>
+        </template>
+      </MegaMenu>
+    </div>
+
     <!-- *MAIN CONTENT -->
     <main class="main-content-area">
       <RouterView />
     </main>
     <!-- *FOOTER -->
     <footer class="footer">
-      <Dock :model="dockItems" :position="'bottom'" class="dock">
+      <!-- <Dock :model="dockItems" :position="'bottom'" class="dock">
         <template #itemicon="{ item }">
           <i v-tooltip.top="item.label" :class="item.icon" style="font-size: 2em"></i>
         </template>
-      </Dock>
+      </Dock> -->
       <AvatarComponent />
     </footer>
   </div>
@@ -218,11 +218,13 @@ export default {
 }
 
 .persistent-drawer {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  bottom: auto;
   width: 250px;
   /* Adjust width as needed */
-  height: 100vh;
-  z-index: auto;
+  z-index: 10; /* or higher if needed */
 }
 
 .persistent-drawer .p-drawer-content {
