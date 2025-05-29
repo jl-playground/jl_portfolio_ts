@@ -6,13 +6,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineComponent } from 'vue'
+import { ref } from 'vue'
 import { Profile } from '@/models/Profile'
 
 // Load initial profile instance
 const userProfile = ref<Profile>(Profile.getInstance())
 
-defineExpose([userProfile])
+defineExpose({
+  userProfile
+})
 </script>
 
 <style lang="scss" scoped>
