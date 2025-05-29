@@ -22,7 +22,7 @@ spec:
         - name: ${APP_NAME}-container
           image: ${IMAGE}
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           envFrom:
             - secretRef:
                 name: envs
