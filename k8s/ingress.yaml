@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - ${HOST_URL}
-      secretName: ${HOST_URL}-tls
+        - ${BASE_URL}
+      secretName: ${BASE_URL}-tls
   rules:
-    - host: ${HOST_URL}
+    - host: ${BASE_URL}
       http:
         paths:
           - path: /
