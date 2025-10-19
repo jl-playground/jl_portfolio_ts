@@ -43,7 +43,8 @@ app.use(PrimeVue, {
     preset: Aura,
     options: {
       cssLayer: {
-        name: 'primevue'
+        name: 'primevue',
+        order: 'theme, base, primevue'
       }
     }
   }

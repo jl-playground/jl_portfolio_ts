@@ -553,48 +553,39 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, onBeforeUnmount } from 'vue'
+<script lang="ts" setup>
+import { onBeforeUnmount, defineExpose, onMounted } from 'vue'
 
-export default defineComponent({
-  name: 'AvatarComponent',
-  setup() {
-    onMounted(() => {
-      calculateEyes()
+const calculateEyes = () => {
+  const eyes = document.querySelectorAll('#svga-group-eyesiris-right, #svga-group-eyesiris-left')
+
+  document.addEventListener('mousemove', (event) => {
+    const mouseX = event.clientX
+    const mouseY = event.clientY
+
+    eyes.forEach((eye) => {
+      const rect = eye.getBoundingClientRect()
+      const eyeCenterX = rect.left + rect.width / 2
+      const eyeCenterY = rect.top + rect.height / 2
+
+      const deltaX = mouseX - eyeCenterX
+      const deltaY = mouseY - eyeCenterY
+      const angle = Math.atan2(deltaY, deltaX)
+
+      const offsetX = Math.cos(angle) * 3
+      const offsetY = Math.sin(angle) * 3
+
+      eye.setAttribute('transform', `matrix(1,0,0,1,${offsetX},${offsetY})`)
     })
-    const calculateEyes = () => {
-      const eyes = document.querySelectorAll(
-        '#svga-group-eyesiris-right, #svga-group-eyesiris-left'
-      )
+  })
+}
 
-      document.addEventListener('mousemove', (event) => {
-        const mouseX = event.clientX
-        const mouseY = event.clientY
+onMounted(() => calculateEyes())
 
-        eyes.forEach((eye) => {
-          const rect = eye.getBoundingClientRect()
-          const eyeCenterX = rect.left + rect.width / 2
-          const eyeCenterY = rect.top + rect.height / 2
+onBeforeUnmount(() => document.removeEventListener('mousemove', calculateEyes))
 
-          const deltaX = mouseX - eyeCenterX
-          const deltaY = mouseY - eyeCenterY
-          const angle = Math.atan2(deltaY, deltaX)
-
-          const offsetX = Math.cos(angle) * 3
-          const offsetY = Math.sin(angle) * 3
-
-          eye.setAttribute('transform', `matrix(1,0,0,1,${offsetX},${offsetY})`)
-        })
-      })
-    }
-
-    onBeforeUnmount(() => {
-      document.removeEventListener('mousemove', calculateEyes)
-    })
-    return {
-      calculateEyes
-    }
-  }
+defineExpose({
+  calculateEyes
 })
 </script>
 
@@ -605,5 +596,12 @@ export default defineComponent({
   width: auto;
   bottom: 0;
   right: 10;
+}
+
+@media (max-width: 768px) {
+  .svg-profile-container-styling {
+    height: 200px;
+    right: 0;
+  }
 }
 </style>
