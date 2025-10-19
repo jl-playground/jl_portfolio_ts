@@ -1,6 +1,6 @@
 # portfolio_jl_ts
 
-This template should help get you started developing with Vue 3 in Vite.
+My Hosted side
 
 ## Recommended IDE Setup
 
