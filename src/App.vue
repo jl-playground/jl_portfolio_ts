@@ -1,238 +1,347 @@
 <template>
-  <div class="main-content">
-    <!-- *HEADER -->
-    <header class="header">
-      <div class="card">
-        <router-link to="/">Joël Leimbacher</router-link>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="#top">{{ profile.getName() }}</a>
+        <nav class="site-nav">
+          <a href="#about">{{ t('nav.about') }}</a>
+          <a href="#skills">{{ t('nav.skills') }}</a>
+          <a href="#projects">{{ t('nav.projects') }}</a>
+          <a href="#languages">{{ t('nav.languages') }}</a>
+          <a href="#contact" class="nav-cta">{{ t('nav.contact') }}</a>
+          <div class="nav-controls">
+            <div class="language-picker" ref="languagePicker">
+              <button
+                class="language-button"
+                type="button"
+                :aria-expanded="languageOpen"
+                aria-haspopup="listbox"
+                aria-labelledby="language-label"
+                @click="toggleLanguage"
+              >
+                <i class="pi pi-globe" aria-hidden="true"></i>
+                <span>{{ currentLanguageLabel }}</span>
+              </button>
+              <div
+                v-if="languageOpen"
+                class="language-menu"
+                role="listbox"
+                :aria-label="t('nav.languageLabel')"
+              >
+                <button
+                  v-for="option in languageOptions"
+                  :key="option.value"
+                  class="language-option"
+                  :class="{ 'is-active': locale === option.value }"
+                  type="button"
+                  role="option"
+                  :aria-selected="locale === option.value"
+                  @click="setLocale(option.value)"
+                >
+                  {{ option.label }}
+                </button>
+              </div>
+            </div>
+            <button
+              class="theme-toggle"
+              type="button"
+              :aria-label="t('nav.themeToggle')"
+              @click="toggleTheme"
+            >
+              <i :class="isDark ? 'pi pi-sun' : 'pi pi-moon'" aria-hidden="true"></i>
+            </button>
+          </div>
+        </nav>
       </div>
     </header>
-    <!-- *SIDEBAR -->
-    <div class="sidebar card flex justify-center persistent-drawer">
-      <MegaMenu :model="items" orientation="horizontal" breakpoint="700px">
-        <template #itemicon="{ item }">
-          <i :class="item.icon" style="font-size: 1.5em"></i>
-        </template>
-      </MegaMenu>
-    </div>
-    <!-- *MAIN CONTENT -->
-    <main class="main-content-area">
+
+    <main id="top" class="site-main">
       <RouterView />
     </main>
-    <!-- *FOOTER -->
-    <footer class="footer">
-      <Dock :model="dockItems" :position="'bottom'" class="dock">
-        <template #itemicon="{ item }">
-          <i
-            v-tooltip.top="item.label"
-            :class="item.icon"
-            @click="item.click"
-            style="font-size: 2em"
-          ></i>
-        </template>
-      </Dock>
-      <AvatarComponent />
+
+    <footer class="site-footer">
+      <span>© 2026 {{ profile.getName() }}</span>
+      <span>{{ t('footer.role') }}</span>
     </footer>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { RouterLink, RouterView, useRouter } from 'vue-router'
-import { PrimeIcons } from '@primevue/core/api'
-import { Profile } from './models/Profile'
-import AvatarComponent from '@/components/AvatarComponent.vue'
+import { RouterView } from 'vue-router'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { Profile } from '@/models/Profile'
 
-interface PanelMenuItem {
-  label: string
-  icon?: string
-  items?: PanelMenuItem[]
+const profile = Profile.getInstance()
+const { locale, t } = useI18n()
+const isDark = ref(false)
+const languageOpen = ref(false)
+const languagePicker = ref<HTMLElement | null>(null)
+const languageOptions = [
+  { value: 'en', label: 'English' },
+  { value: 'de', label: 'Deutsch' },
+  { value: 'fr', label: 'Francais' },
+  { value: 'it', label: 'Italiano' }
+]
+
+const currentLanguageLabel = computed(() => {
+  const match = languageOptions.find((option) => option.value === locale.value)
+  return match ? match.label : 'English'
+})
+
+const updateLocale = () => {
+  localStorage.setItem('locale', locale.value)
 }
 
-//* LOAD INITIAL
-const userProfile = ref<any>(null)
-const router = useRouter()
-const items = ref<PanelMenuItem[]>([])
-
-const dockItems = ref([
-  { label: 'Home' as string, icon: PrimeIcons.HOME, click: () => router.push('/') },
-  { label: 'Profile' as string, icon: PrimeIcons.USER, click: () => router.push('/profile') }
-])
-
-const setupProfile = () => {
-  userProfile.value = Profile.getInstance()
-  // Transform user data to MegaMenu items
-  items.value = [
-    {
-      label: 'Personal Info',
-      icon: PrimeIcons.USER,
-      items: [
-        [
-          {
-            label: `Name: ${userProfile.value.name}`,
-            icon: PrimeIcons.ID_CARD
-          },
-          {
-            label: `Title: ${userProfile.value.title}`,
-            icon: PrimeIcons.BRIEFCASE
-          }
-        ]
-      ]
-    },
-    {
-      label: 'Skills',
-      icon: PrimeIcons.STAR,
-      items: [
-        userProfile.value.skills.map((skill: string) => ({
-          label: skill,
-          icon: PrimeIcons.CHECK
-        }))
-      ]
-    },
-    {
-      label: 'Languages',
-      icon: PrimeIcons.GLOBE,
-      items: [
-        userProfile.value.languages.map((language: any) => ({
-          label: language.name,
-          icon: PrimeIcons.COG,
-          items: [
-            [
-              {
-                label: `Proficiency: ${language.proficiency}`,
-                icon: PrimeIcons.COG
-              },
-              {
-                label: `Experience Years: ${language.experienceYears}`,
-                icon: PrimeIcons.CALENDAR
-              },
-              ...language.relevantProjects.map((project: string) => ({
-                label: project,
-                icon: PrimeIcons.FOLDER
-              }))
-            ]
-          ]
-        }))
-      ]
-    },
-    {
-      label: 'Hobbies',
-      icon: PrimeIcons.HEART,
-      items: [
-        userProfile.value.hobbies.map((hobby: any) => ({
-          label: hobby.name,
-          icon: PrimeIcons.IMAGE,
-          items: [
-            [
-              {
-                label: `Description: ${hobby.description}`,
-                icon: PrimeIcons.INFO
-              },
-              {
-                label: `Years of Experience: ${hobby.yearsOfExperience}`,
-                icon: PrimeIcons.CALENDAR
-              }
-            ]
-          ]
-        }))
-      ]
-    }
-  ]
+const setLocale = (value: string) => {
+  locale.value = value
+  updateLocale()
+  languageOpen.value = false
 }
 
-//* Setup
-setupProfile()
+const toggleLanguage = () => {
+  languageOpen.value = !languageOpen.value
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (!languagePicker.value) return
+  if (!languagePicker.value.contains(event.target as Node)) {
+    languageOpen.value = false
+  }
+}
+
+const applyTheme = (dark: boolean) => {
+  const root = document.documentElement
+  if (dark) {
+    root.classList.add('theme-dark')
+  } else {
+    root.classList.remove('theme-dark')
+  }
+}
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+  applyTheme(isDark.value)
+}
+
+onMounted(() => {
+  const storedTheme = localStorage.getItem('theme')
+  if (storedTheme) {
+    isDark.value = storedTheme === 'dark'
+  } else if (window.matchMedia) {
+    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+  }
+  applyTheme(isDark.value)
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <style scoped>
-.main-content {
-  display: grid;
-  grid-template-rows: 0.5fr 0.5fr 10fr 0.5fr;
-  grid-template-columns: 0.5fr 10fr;
-  grid-template-areas:
-    'header header'
-    'sidebar sidebar'
-    'main-content-area main-content-area'
-    'footer footer';
-  height: 100vh;
-  width: 100vw;
-}
-
-.persistent-drawer {
-  position: relative;
-  bottom: auto;
-}
-
-.persistent-drawer .p-drawer-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.header {
-  margin-top: 1rem;
-  grid-area: header;
-  display: flex;
-  justify-content: center;
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-.sidebar {
-  grid-area: sidebar;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin: 0.5em 0 0 0;
-}
-
-.main-content-area {
-  grid-area: main-content-area;
-  position: relative;
+.app-shell {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* background-color: blue; */
-  margin: 1rem 1rem 1rem 0;
-  border-radius: 1rem;
-  overflow-y: auto;
-  min-height: 0;
 }
 
-.footer {
-  grid-area: footer;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 6vw;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  color: var(--color-muted);
+}
+
+.site-nav a:hover {
+  color: var(--color-ink);
+}
+
+.nav-cta {
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.nav-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 0.5rem;
+}
+
+.nav-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-muted);
+}
+
+.language-picker {
   position: relative;
-  /* margin-bottom: 1rem; */
-  height: 6rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
 
-  .dock {
-    position: relative;
-    height: 100%;
-    margin-bottom: 1rem;
+.language-picker:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+.language-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.language-button i {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.language-button::after {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid var(--color-muted);
+  border-bottom: 1.5px solid var(--color-muted);
+  transform: rotate(45deg);
+  margin-left: 0.2rem;
+}
+
+.language-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.4rem;
+  border-radius: 16px;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  z-index: 20;
+}
+
+.language-option {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.language-option:hover,
+.language-option.is-active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.theme-toggle {
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  font-size: 0.85rem;
+  color: var(--color-ink);
+  box-shadow: var(--shadow-soft);
+}
+
+.site-main {
+  flex: 1;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem 6vw 2.5rem;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .p-dock-mobile {
-    width: fit-content;
-    margin-bottom: 1rem;
+  .site-nav {
+    flex-wrap: wrap;
   }
 
-  :deep(.p-dock-list-container) {
-    background-color: rgba(16, 24, 21, 0.5);
+  .nav-controls {
+    flex-wrap: wrap;
+  }
+
+  .site-footer {
+    flex-direction: column;
   }
 }
-@media (max-width: 700px) {
-  .sidebar {
-    justify-content: flex-start; /* Aligns the hamburger button to the left */
-    padding-left: 1rem; /* Adds some space from the edge */
+
+@media (max-width: 600px) {
+  .site-header__inner {
+    padding: 1rem 1.5rem;
   }
-  .sidebar :deep(.p-megamenu-root-list) {
-    width: 20em;
+
+  .site-footer {
+    padding: 1.5rem 1.5rem 2rem;
   }
 }
 </style>

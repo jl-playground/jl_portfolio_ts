@@ -16,18 +16,24 @@
   height: 100%;
   width: 100%;
   font-weight: normal;
+  padding: 0;
+  margin: 0;
 }
 
-a,
-.green {
+a {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+  color: inherit;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.text-link {
+  color: var(--color-accent);
+  border-bottom: 1px solid transparent;
+}
+
+.text-link:hover {
+  border-color: var(--color-accent);
 }

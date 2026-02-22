@@ -10,11 +10,6 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/profile',
-      name: 'profile',
-      component: () => import('@/views/ProfileView.vue')
-    },
-    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       redirect: '/'
