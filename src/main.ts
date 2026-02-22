@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import 'primeicons/primeicons.css'
+import i18n from '@/i18n'
 
 //* COMPONENTS
 
@@ -37,6 +38,7 @@ app.directive('tooltip', Tooltip)
 
 app.use(createPinia())
 app.use(router)
+app.use(i18n)
 
 app.use(PrimeVue, {
   theme: {

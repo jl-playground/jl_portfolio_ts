@@ -43,84 +43,77 @@ export class Profile {
     const python = new ProgrammingLanguage(
       'Python',
       'Advanced',
-      5,
+      2,
       ['Data Analysis Tool', 'Machine Learning Model'],
       'Experienced with Pandas, Scikit-learn, TensorFlow'
     )
     const javascript = new ProgrammingLanguage(
       'JavaScript',
       'Expert',
-      8,
+      4,
       ['E-commerce Platform', 'Real-time Chat Application'],
       'Proficient with React, Node.js, Vue.js'
     )
     const java = new ProgrammingLanguage(
       'Java',
       'Intermediate',
-      5,
+      2,
       ['Banking System', 'E-commerce Backend'],
       'Good knowledge of Spring Framework and Hibernate'
     )
     const kotlin = new ProgrammingLanguage(
       'Kotlin',
       'Intermediate',
-      4,
+      2,
       ['Android Mobile App'],
       'Experience with Android development'
     )
     const dart = new ProgrammingLanguage(
       'Dart',
       'Expert',
-      7,
+      4,
       ['Cross-platform Mobile App'],
       'Skilled in Flutter framework'
     )
     const rust = new ProgrammingLanguage(
       'Rust',
-      'Advanced',
-      3,
+      'Intermediate',
+      1,
       ['Systems Programming Project'],
       'Strong understanding of memory safety and concurrency'
     )
     const swift = new ProgrammingLanguage(
       'Swift',
       'Beginner',
-      2,
+      1,
       ['iOS App Prototype'],
       'Familiar with SwiftUI and iOS development basics'
     )
     const go = new ProgrammingLanguage(
       'Go',
       'Beginner',
-      2,
+      1,
       ['Microservices Project'],
       'Basic knowledge of Go routines and channels'
     )
     const csharp = new ProgrammingLanguage(
       'C#',
       'Intermediate',
-      2,
+      1,
       ['Desktop Application'],
       'Experience with .NET framework and WPF'
     )
     const typescript = new ProgrammingLanguage(
       'TypeScript',
       'Expert',
-      6,
+      4,
       ['Large-scale Web Application'],
       'Strong typing and OOP concepts in web development'
-    )
-    const nix = new ProgrammingLanguage(
-      'Nix',
-      'Beginner',
-      2,
-      ['Configuration Management'],
-      'Basic understanding of NixOS and package management'
     )
     const lua = new ProgrammingLanguage(
       'Lua',
       'Expert',
-      6,
+      3,
       ['Game Scripting'],
       'Experience with game engines like Corona SDK and Love2D'
     )
@@ -137,7 +130,7 @@ export class Profile {
         'Cloud Computing',
         'DevOps'
       ],
-      [python, javascript, java, kotlin, dart, rust, swift, go, csharp, typescript, nix, lua],
+      [python, javascript, java, kotlin, dart, rust, swift, go, csharp, typescript, lua],
       [photography, hiking, gaming],
       {
         email: 'joelbern006@gmail.com',

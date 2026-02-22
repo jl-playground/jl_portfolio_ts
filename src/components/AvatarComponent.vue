@@ -595,7 +595,7 @@ defineExpose({
   height: 300px;
   width: auto;
   bottom: 0;
-  right: 10;
+  right: 0;
 }
 
 @media (max-width: 768px) {
