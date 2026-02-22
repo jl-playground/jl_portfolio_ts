@@ -1,0 +1,38 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="12" y1="8" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F3D3E"/>
+      <stop offset="1" stop-color="#9CC8B7"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#bg)">
+    <animate attributeName="rx" values="18;20;18" dur="6s" repeatCount="indefinite" />
+  </rect>
+  <g filter="url(#soft)" fill="white">
+    <path
+      d="M26 20H30V40C30 45.5228 26.4183 49 21 49C17.3137 49 14.5 47.8 12.6 46.05L14.8 42.45C16.2 43.7 18.2 44.6 20.6 44.6C24 44.6 26 42.8 26 39.6V20Z"
+    >
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="0 0; 0 -0.6; 0 0"
+        dur="4.5s"
+        repeatCount="indefinite"
+      />
+    </path>
+    <path
+      d="M38 20H42V44H52V48H38V20Z"
+    >
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="0 0; 0 0.6; 0 0"
+        dur="4.5s"
+        repeatCount="indefinite"
+      />
+    </path>
+  </g>
+</svg>
