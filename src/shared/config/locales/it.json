@@ -91,7 +91,36 @@
     "readTime": "{min} min di lettura",
     "readMore": "Leggi tutto",
     "backToPosts": "Torna agli articoli",
-    "tags": "Tag"
+    "tags": "Tag",
+    "posts": [
+      {
+        "slug": "rust-memory-safety",
+        "title": "Perche Rust ha cambiato il mio modo di pensare alla sicurezza della memoria",
+        "excerpt": "Dopo anni con linguaggi garbage-collected, Rust mi ha costretto a riconsiderare tutto cio che credevo di sapere sulla gestione della memoria. Ecco cosa ho scoperto.",
+        "content": "## Il modello di Ownership\n\nIl sistema di ownership di Rust e il concetto piu importante che ho incontrato nella programmazione di sistemi. A differenza di JavaScript o Python dove la memoria e gestita automaticamente, Rust ti costringe a pensare a chi possiede un dato in ogni singolo momento.\n\n**L ownership ha tre regole semplici:**\n- Ogni valore ha un unico proprietario\n- Quando il proprietario esce dallo scope, il valore viene eliminato\n- L ownership puo essere trasferita (moved) o presa in prestito (borrowed)\n\n### Borrowing vs Moving\n\nNei linguaggi garbage-collected passiamo riferimenti ovunque senza pensarci. Rust rende questo esplicito. Devi scegliere tra:\n- `\u0026T` — un prestito immutabile (molti lettori)\n- `\u0026mut T` — un prestito mutabile (un solo scrittore)\n- Spostare il valore interamente (trasferimento di ownership)\n\n## Perche conta in produzione\n\nIn EvoSys AG elaboriamo grandi dataset geospaziali. Le perdite di memoria nei servizi Node.js a lunga esecuzione erano un problema ricorrente. Dopo aver sperimentato con un microservizio Rust per l ingestione dei dati, l utilizzo della memoria e diventato completamente prevedibile. Nessun picco, nessuna crescita graduale, nessuna pausa GC.\n\n## La curva di apprendimento\n\nIl compilatore Rust e famoso per la sua severita. Ho passato settimane a combattere con il borrow checker. Ma una volta che il modello mentale ha fatto clic, ho iniziato a scrivere codice piu sicuro in *ogni* linguaggio. Ora penso a lifetime e confini di mutazione persino in TypeScript.\n\n\u003e \"Il borrow checker non e il tuo nemico. E un pair programmer che non si stanca mai.\"\n\n## Per iniziare\n\nSe sei curioso, consiglio:\n1. [Il Rust Book](https://doc.rust-lang.org/book/) — gratuito e completo\n2. [Rustlings](https://github.com/rust-lang/rustlings) — esercizi pratici\n3. Costruire un piccolo tool CLI come primo progetto\n\nRust non sostituira ogni strumento nel tuo stack, ma cambiera il tuo modo di pensare l affidabilita.",
+        "tags": ["Rust", "Programmazione di sistemi", "Sicurezza della memoria"],
+        "date": "2025-03-15",
+        "readTimeMinutes": 8
+      },
+      {
+        "slug": "ml-flutter-integration",
+        "title": "Integrare modelli di Machine Learning in app Flutter",
+        "excerpt": "Portare il ML su mobile non deve essere doloroso. Condivido il mio approccio per eseguire modelli TensorFlow Lite dentro un applicazione Flutter con overhead minimo.",
+        "content": "## La sfida\n\nIl ML mobile e complicato. Serve bassa latenza, piccola dimensione del modello e ragionevole accuratezza — scegli due, giusto? In EvoSys AG avevamo bisogno di classificazione di immagini on-device per un app di ispezione sul campo. Inviare ogni foto al server era troppo lento e costoso.\n\n## TensorFlow Lite + Flutter\n\nTensorFlow Lite e lo standard per l inferenza on-device. I package `tflite` e `tflite_flutter` rendono l integrazione semplice.\n\n### Ottimizzazione del modello\n\nPrima di toccare il codice Flutter, ottimizza il tuo modello:\n- **Quantizzazione** — converti i pesi `float32` in `int8`. Riduce la dimensione di ~4x con una perdita minima di accuratezza.\n- **Pruning** — rimuovi connessioni ridondanti. Puo ridurre la dimensione del 50%.\n- **Distillazione delle conoscenze** — addestra un piccolo modello \"studente\" che imita uno \"insegnante\" piu grande.\n\n### Pattern di integrazione\n\n1. Impacchetta il modello `.tflite` come asset\n2. Caricalo all avvio dell app (o pigramente al primo utilizzo)\n3. Pre-elabora i frame della camera nel tensore di input atteso\n4. Esegui l inferenza e post-elabora i risultati\n\n## Consigli sulle prestazioni\n\n- Usa gli **isolates `compute`** in Flutter cosi l inferenza non blocca il thread UI\n- Metti in cache gli input pre-elaborati quando possibile\n- Profila con **Dart DevTools** per individuare jank da operazioni pesanti\n\n## Risultati\n\nIl nostro modello MobileNetV2 ottimizzato gira a ~45ms per frame su un dispositivo Android di fascia media. Sono 22 fps — piu che sufficienti per un feedback in tempo reale.\n\n## Risorse\n\n- [TensorFlow Lite Flutter Plugin](https://pub.dev/packages/tflite_flutter)\n- [ML Kit for Flutter](https://pub.dev/packages/google_ml_kit) — per attivita comuni come il riconoscimento del testo\n- [Edge Impulse](https://edgeimpulse.com/) — ottimo per il prototyping tinyML",
+        "tags": ["Flutter", "Machine Learning", "TensorFlow", "Dart"],
+        "date": "2025-01-20",
+        "readTimeMinutes": 12
+      },
+      {
+        "slug": "building-scalable-vue-apps",
+        "title": "Lezioni dalla costruzione di applicazioni Vue.js scalabili",
+        "excerpt": "Dopo aver messo in produzione diverse app Vue, ho distillato i pattern che contano davvero per la manutenibilita a lungo termine in grande scala.",
+        "content": "## Feature-Sliced Design\n\nIl miglioramento architetturale piu grande che ho fatto e stato adottare il **Feature-Sliced Design (FSD)**. Invece di organizzare per tipo di file (`components/`, `store/`, `utils/`), struttura per dominio:\n\n- `features/` — funzionalita orientate all utente (es. auth, checkout)\n- `entities/` — oggetti di business (es. utente, prodotto)\n- `shared/` — infrastruttura riutilizzabile (UI kit, client API)\n- `widgets/` — composizioni complesse di feature ed entity\n- `pages/` — viste a livello di route\n- `app/` — inizializzazione app, provider, styles\n\nQuesta inversione delle dipendenze mantiene le feature isolate e componibili.\n\n## State Management che scala\n\nPinia e eccellente, ma il vero vantaggio sta in *come* lo usi:\n- **Store per entita**, non un unico store gigante\n- Usa **composable stores** per le preoccupazioni trasversali\n- Tieni gli store vicini alle feature che servono\n\n## Confini dei componenti\n\nSeguo una gerarchia rigida:\n1. **Atoms** — pulsanti, input, label (nessuna logica di business)\n2. **Molecules** — barra di ricerca, riga di modulo (combinazioni semplici)\n3. **Organisms** — sezioni di feature (autonome)\n4. **Templates** — layout di pagina\n5. **Pages** — componenti di route\n\n## Sicurezza dei tipi\n\nTypeScript + Vue 3 e potente, ma serve disciplina:\n- Definisci esplicitamente le **interfacce delle props**\n- Usa `defineEmits` con payload tipizzati\n- Sfrutta `\u003cscript setup lang=\"ts\"\u003e` per codice piu pulito\n\n## Strategia di test\n\n- **Test unitari** per composables e utilities\n- **Test dei componenti** con Vue Test Utils\n- **Test E2E** solo per i flussi critici degli utenti\n\n## Pensiero finale\n\nLa scalabilita non si misura in righe di codice. Si misura in **comunicazione**. Una struttura chiara significa che i nuovi membri del team possono rilasciare feature dal primo giorno senza rompere il codice esistente.",
+        "tags": ["Vue.js", "TypeScript", "Architettura", "Frontend"],
+        "date": "2024-11-08",
+        "readTimeMinutes": 10
+      }
+    ]
   },
   "contact": {
     "title": "Contatto",

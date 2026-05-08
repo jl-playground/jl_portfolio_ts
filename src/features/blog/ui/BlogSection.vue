@@ -2,25 +2,25 @@
   <section id="blog" class="blog section reveal" :ref="setRef">
     <SectionHeader :title="t('blog.title')" :subtitle="t('blog.subtitle')" />
     <div class="blog__grid">
-      <article v-for="post in posts" :key="post.getSlug()" class="blog-card">
+      <article v-for="post in posts" :key="post.slug" class="blog-card">
         <div class="blog-card__cover">
           <div class="blog-card__cover-placeholder">
-            <span>{{ post.getTitle().charAt(0) }}</span>
+            <span>{{ post.title.charAt(0) }}</span>
           </div>
         </div>
         <div class="blog-card__content">
           <div class="blog-card__meta">
-            <AppChip v-for="tag in post.getTags()" :key="tag" variant="outline">{{ tag }}</AppChip>
-            <span class="blog-card__date">{{ post.getDate() }}</span>
+            <AppChip v-for="tag in post.tags" :key="tag" variant="outline">{{ tag }}</AppChip>
+            <span class="blog-card__date">{{ post.date }}</span>
           </div>
-          <h3 class="blog-card__title">{{ post.getTitle() }}</h3>
-          <p class="blog-card__excerpt">{{ post.getExcerpt() }}</p>
+          <h3 class="blog-card__title">{{ post.title }}</h3>
+          <p class="blog-card__excerpt">{{ post.excerpt }}</p>
           <div class="blog-card__footer">
             <span class="blog-card__read-time">
-              {{ t('blog.readTime', { min: post.getReadTime() }) }}
+              {{ t('blog.readTime', { min: post.readTimeMinutes }) }}
             </span>
             <router-link
-              :to="{ name: 'blog-post', params: { slug: post.getSlug() } }"
+              :to="{ name: 'blog-post', params: { slug: post.slug } }"
               class="blog-card__read-link"
             >
               {{ t('blog.readMore') }} <i class="pi pi-arrow-right"></i>
@@ -33,14 +33,23 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Profile } from '@/entities/profile/model/Profile'
 import SectionHeader from '@/shared/ui/SectionHeader.vue'
 import AppChip from '@/shared/ui/AppChip.vue'
 
-const { t } = useI18n()
-const profile = Profile.getInstance()
-const posts = profile.getBlogPosts()
+interface BlogPostItem {
+  slug: string
+  title: string
+  excerpt: string
+  content: string
+  tags: string[]
+  date: string
+  readTimeMinutes: number
+}
+
+const { t, tm } = useI18n()
+const posts = computed<BlogPostItem[]>(() => tm('blog.posts') as BlogPostItem[])
 
 const setRef = (el: unknown) => {
   if (el instanceof HTMLElement) el.classList.add('reveal')
