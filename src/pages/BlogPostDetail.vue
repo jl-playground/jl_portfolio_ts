@@ -8,18 +8,18 @@
       <article class="post-detail__article">
         <header class="post-detail__header">
           <div class="post-detail__meta">
-            <AppChip v-for="tag in post.getTags()" :key="tag" variant="outline">{{ tag }}</AppChip>
-            <span class="post-detail__date">{{ post.getDate() }}</span>
+            <AppChip v-for="tag in post.tags" :key="tag" variant="outline">{{ tag }}</AppChip>
+            <span class="post-detail__date">{{ post.date }}</span>
             <span class="post-detail__dot">•</span>
-            <span class="post-detail__read-time">{{ t('blog.readTime', { min: post.getReadTime() }) }}</span>
+            <span class="post-detail__read-time">{{ t('blog.readTime', { min: post.readTimeMinutes }) }}</span>
           </div>
-          <h1 class="post-detail__title">{{ post.getTitle() }}</h1>
-          <p class="post-detail__excerpt">{{ post.getExcerpt() }}</p>
+          <h1 class="post-detail__title">{{ post.title }}</h1>
+          <p class="post-detail__excerpt">{{ post.excerpt }}</p>
         </header>
 
         <div class="post-detail__cover">
           <div class="post-detail__cover-inner">
-            <span class="post-detail__cover-letter">{{ post.getTitle().charAt(0) }}</span>
+            <span class="post-detail__cover-letter">{{ post.title.charAt(0) }}</span>
           </div>
         </div>
 
@@ -28,7 +28,7 @@
         <footer class="post-detail__footer">
           <div class="post-detail__tags">
             <span class="post-detail__tags-label">{{ t('blog.tags') }}:</span>
-            <AppChip v-for="tag in post.getTags()" :key="tag" variant="outline">{{ tag }}</AppChip>
+            <AppChip v-for="tag in post.tags" :key="tag" variant="outline">{{ tag }}</AppChip>
           </div>
           <div class="post-detail__nav">
             <AppButton variant="ghost" size="sm" @click="goBack">
@@ -45,24 +45,34 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { Profile } from '@/entities/profile/model/Profile'
 import AppButton from '@/shared/ui/AppButton.vue'
 import AppChip from '@/shared/ui/AppChip.vue'
 
+interface BlogPostItem {
+  slug: string
+  title: string
+  excerpt: string
+  content: string
+  tags: string[]
+  date: string
+  readTimeMinutes: number
+}
+
 const props = defineProps<{ slug: string }>()
-const { t } = useI18n()
+const { t, tm } = useI18n()
 const router = useRouter()
-const profile = Profile.getInstance()
+
+const posts = computed<BlogPostItem[]>(() => tm('blog.posts') as BlogPostItem[])
 
 const post = computed(() => {
-  const found = profile.getBlogPosts().find((p) => p.getSlug() === props.slug)
+  const found = posts.value.find((p) => p.slug === props.slug)
   if (!found) throw new Error(`Blog post not found: ${props.slug}`)
   return found
 })
 
 const renderedContent = computed(() => {
   // Simple markdown-to-HTML renderer
-  let html = post.value.getContent()
+  let html = post.value.content
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')

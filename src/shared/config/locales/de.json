@@ -63,7 +63,27 @@
   },
   "testimonials": {
     "title": "Referenzen",
-    "subtitle": "Was Kollegen über die Zusammenarbeit mit mir sagen."
+    "subtitle": "Was Kunden über die Zusammenarbeit mit mir sagen.",
+    "items": [
+      {
+        "quote": "Joel hat unser veraltetes internes Dashboard in eine moderne, responsive Web-App verwandelt. Das Projekt wurde termingerecht geliefert und die Qualität übertraf unsere Erwartungen.",
+        "author": "Elena R.",
+        "role": "Projektmanagerin",
+        "company": "Bern Innovations GmbH"
+      },
+      {
+        "quote": "Wir haben Joel für ein Flutter-Mobilprojekt engagiert und er lieferte eine polierte plattformübergreifende App in Rekordzeit. Seine Kommunikation und technischen Fähigkeiten sind hervorragend.",
+        "author": "Marcus S.",
+        "role": "CTO",
+        "company": "AlpineTech Solutions"
+      },
+      {
+        "quote": "Joel hat unser gesamtes E-Commerce-Backend und Frontend von Grund auf neu gebaut. Er war proaktiv, transparent und hat sich ehrlich um den Erfolg unseres Produkts gekümmert.",
+        "author": "Anna B.",
+        "role": "Gründerin",
+        "company": "GreenStart Initiative"
+      }
+    ]
   },
   "blog": {
     "title": "Neueste Beiträge",
@@ -71,7 +91,36 @@
     "readTime": "{min} Min. Lesezeit",
     "readMore": "Weiterlesen",
     "backToPosts": "Zurück zu Beiträgen",
-    "tags": "Tags"
+    "tags": "Tags",
+    "posts": [
+      {
+        "slug": "rust-memory-safety",
+        "title": "Warum Rust meine Sicht auf Speichersicherheit verändert hat",
+        "excerpt": "Nach Jahren mit Garbage-Collection-Sprachen zwang mich Rust, alles über Speicherverwaltung neu zu überdenken. Das habe ich gelernt.",
+        "content": "## Das Ownership-Modell\n\nRusts Ownership-System ist das wichtigste Konzept, das ich in der Systemprogrammierung kennengelernt habe. Im Gegensatz zu JavaScript oder Python, wo der Speicher automatisch verwaltet wird, zwingt dich Rust, bei jedem Moment zu überlegen, wem ein Datum gehört.\n\n**Ownership hat drei einfache Regeln:**\n- Jeder Wert hat einen einzigen Besitzer\n- Wenn der Besitzer out of scope geht, wird der Wert verworfen\n- Ownership kann übertragen (moved) oder geliehen (borrowed) werden\n\n### Borrowing vs Moving\n\nIn Garbage-Collection-Sprachen geben wir überall Referenzen weiter, ohne nachzudenken. Rust macht das explizit. Du musst wählen zwischen:\n- `\u0026T` — eine unveränderliche Leihe (viele Leser)\n- `\u0026mut T` — eine veränderliche Leihe (ein Schreiber)\n- Den Wert vollständig verschieben (Ownership übertragen)\n\n## Warum es in der Produktion wichtig ist\n\nBei EvoSys AG verarbeiten wir große Geodatensätze. Speicherlecks in langlaufenden Node.js-Diensten waren ein wiederkehrendes Problem. Nach dem Experimentieren mit einem Rust-basierten Mikroservice für die Datenerfassung wurde der Speicherverbrauch völlig vorhersehbar. Keine Spikes, kein stetiges Wachstum, keine GC-Pausen.\n\n## Die Lernkurve\n\nDer Rust-Compiler ist berühmt streng. Ich habe Wochen mit dem Borrow Checker gekämpft. Aber als das mentale Modell klickte, begann ich in *jeder* Sprache sichereren Code zu schreiben. Ich denke sogar in TypeScript über Lifetimes und Mutationsgrenzen nach.\n\n\u003e \"Der Borrow Checker ist nicht dein Feind. Er ist ein Pair-Programmer, der nie müde wird.\"\n\n## Erste Schritte\n\nWenn du neugierig bist, empfehle ich:\n1. [Das Rust-Buch](https://doc.rust-lang.org/book/) — kostenlos und umfassend\n2. [Rustlings](https://github.com/rust-lang/rustlings) — praktische Übungen\n3. Ein kleines CLI-Tool als erstes Projekt bauen\n\nRust wird nicht jedes Werkzeug in deinem Stack ersetzen, aber es wird verändern, wie du über Zuverlässigkeit denkst.",
+        "tags": ["Rust", "Systemprogrammierung", "Speichersicherheit"],
+        "date": "2025-03-15",
+        "readTimeMinutes": 8
+      },
+      {
+        "slug": "ml-flutter-integration",
+        "title": "Machine-Learning-Modelle in Flutter-Apps integrieren",
+        "excerpt": "ML auf Mobile muss nicht schmerzhaft sein. Ich teile meinen Ansatz für den Betrieb von TensorFlow-Lite-Modellen in einer Flutter-App mit minimalem Overhead.",
+        "content": "## Die Herausforderung\n\nMobile ML ist knifflig. Man braucht niedrige Latenz, kleine Modellgröße und vernünftige Genauigkeit — wähle zwei, oder? Bei EvoSys AG brauchten wir On-Device-Bildklassifizierung für eine Feldinspektions-App. Jedes Foto an den Server zu senden, war zu langsam und teuer.\n\n## TensorFlow Lite + Flutter\n\nTensorFlow Lite ist der Standard für On-Device-Inferenz. Die Pakete `tflite` und `tflite_flutter` machen die Integration unkompliziert.\n\n### Modelloptimierung\n\nBevor du Flutter-Code schreibst, optimiere dein Modell:\n- **Quantisierung** — wandle `float32`-Gewichte in `int8` um. Reduziert die Größe um ~4x mit minimalem Genauigkeitsverlust.\n- **Pruning** — entferne redundante Verbindungen. Kann die Größe um 50% senken.\n- **Knowledge Distillation** — trainiere ein kleines \"Student\"-Modell, das ein großes \"Teacher\"-Modell nachahmt.\n\n### Integrationsmuster\n\n1. Das `.tflite`-Modell als Asset bündeln\n2. Beim App-Start laden (oder erst bei Bedarf)\n3. Kamerabilder in den erwarteten Eingabetensor vorverarbeiten\n4. Inferenz laufen lassen und Ergebnisse nachverarbeiten\n\n## Performance-Tipps\n\n- Nutze **`compute`-Isolates** in Flutter, damit die Inferenz den UI-Thread nicht blockiert\n- Cache vorverarbeitete Eingaben wenn möglich\n- Profile mit **Dart DevTools**, um Jank durch schwere Operationen zu erkennen\n\n## Ergebnisse\n\nUnser optimiertes MobileNetV2-Modell läuft mit ~45ms pro Frame auf einem Mittelklasse-Android-Gerät. Das sind 22 fps — mehr als genug für Echtzeit-Feedback.\n\n## Ressourcen\n\n- [TensorFlow Lite Flutter Plugin](https://pub.dev/packages/tflite_flutter)\n- [ML Kit for Flutter](https://pub.dev/packages/google_ml_kit) — für gängige Aufgaben wie Texterkennung\n- [Edge Impulse](https://edgeimpulse.com/) — toll für tinyML-Prototyping",
+        "tags": ["Flutter", "Machine Learning", "TensorFlow", "Dart"],
+        "date": "2025-01-20",
+        "readTimeMinutes": 12
+      },
+      {
+        "slug": "building-scalable-vue-apps",
+        "title": "Erkenntnisse aus dem Bau skalierbarer Vue.js-Anwendungen",
+        "excerpt": "Nachdem ich mehrere Vue-Apps in Produktion gebracht habe, habe ich die Muster herausdestilliert, die für langfristige Wartbarkeit im Maßstab wirklich zählen.",
+        "content": "## Feature-Sliced Design\n\nDie größte architektonische Verbesserung war die Einführung von **Feature-Sliced Design (FSD)**. Statt nach Dateityp zu strukturieren (`components/`, `store/`, `utils/`), strukturiere nach Domäne:\n\n- `features/` — nutzerbezogene Fähigkeiten (z. B. Auth, Checkout)\n- `entities/` — Geschäftsobjekte (z. B. User, Produkt)\n- `shared/` — wiederverwendbare Infrastruktur (UI-Kit, API-Client)\n- `widgets/` — komplexe Kompositionen aus Features und Entities\n- `pages/` — Route-Ebene Views\n- `app/` — App-Initialisierung, Provider, Styles\n\nDiese Abhängigkeitsumkehrung hält Features isoliert und komponierbar.\n\n## State Management, das skaliert\n\nPinia ist exzellent, aber der echte Gewinn liegt in der *Nutzung*:\n- **Store pro Entity**, nicht ein riesiger Store\n- Nutze **Composable Stores** für querschnittliche Belange\n- Halte Stores nah bei den Features, die sie bedienen\n\n## Komponenten-Grenzen\n\nIch folge einer strikten Hierarchie:\n1. **Atoms** — Buttons, Inputs, Labels (keine Geschäftslogik)\n2. **Molecules** — Suchleiste, Formularzeile (einfache Kombinationen)\n3. **Organisms** — Feature-Abschnitte (selbstständig)\n4. **Templates** — Page-Layouts\n5. **Pages** — Route-Komponenten\n\n## Typsicherheit\n\nTypeScript + Vue 3 ist mächtig, aber man braucht Disziplin:\n- Definiere **Props-Interfaces** explizit\n- Nutze `defineEmits` mit typisierten Payloads\n- Setze `\u003cscript setup lang=\"ts\"\u003e` für saubereren Code ein\n\n## Teststrategie\n\n- **Unit-Tests** für Composables und Utilities\n- **Komponententests** mit Vue Test Utils\n- **E2E-Tests** nur für kritische User-Flows\n\n## Fazit\n\nSkalierbarkeit geht nicht um Codezeilen. Es geht um **Kommunikation**. Eine klare Struktur bedeutet, dass neue Teammitglieder am ersten Tag Features liefern können, ohne bestehenden Code zu brechen.",
+        "tags": ["Vue.js", "TypeScript", "Architektur", "Frontend"],
+        "date": "2024-11-08",
+        "readTimeMinutes": 10
+      }
+    ]
   },
   "contact": {
     "title": "Kontakt",

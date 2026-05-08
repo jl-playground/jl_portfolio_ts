@@ -66,6 +66,7 @@ import SectionHeader from '@/shared/ui/SectionHeader.vue'
 import AppChip from '@/shared/ui/AppChip.vue'
 import AppTag from '@/shared/ui/AppTag.vue'
 import { formatDate } from '@/shared/lib/utils'
+import { Profile } from '@/entities/profile/model/Profile'
 
 const { t, locale } = useI18n()
 
@@ -104,15 +105,18 @@ const getLanguageColor = (lang: string): string => {
 const loadProjects = async () => {
   try {
     const response = await fetch('https://api.github.com/users/Jl115/repos?per_page=100')
-    if (!response.ok) throw new Error('GitHub request failed')
-    const data = await response.json() as GitHubRepo[]
-    const curated = data
-      .filter(repo => !repo.fork && !repo.archived)
-      .sort((a, b) => {
-        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-      })
-      .slice(0, 9)
-    projects.value = curated
+    let curated: GitHubRepo[] = []
+    if (response.ok) {
+      const data = await response.json() as GitHubRepo[]
+      curated = data
+        .filter(repo => !repo.fork && !repo.archived)
+        .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+    }
+    const fakeProjects = Profile.getInstance().getProjects()
+    const merged = [...curated, ...fakeProjects]
+      .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+      .slice(0, 12)
+    projects.value = merged
   } catch (error) {
     projectError.value = t('projects.error')
   } finally {
