@@ -3,28 +3,29 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // Specify the base path
-  plugins: [
-    vue(),
-    tailwindcss()
-  ],
+  base: './',
+  plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@/app': fileURLToPath(new URL('./src/app', import.meta.url)),
+      '@/pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
+      '@/widgets': fileURLToPath(new URL('./src/widgets', import.meta.url)),
+      '@/features': fileURLToPath(new URL('./src/features', import.meta.url)),
+      '@/entities': fileURLToPath(new URL('./src/entities', import.meta.url)),
+      '@/shared': fileURLToPath(new URL('./src/shared', import.meta.url))
     }
   },
   build: {
-    outDir: 'dist', // Specify the output directory
-    assetsDir: 'assets', // Directory to place generated static assets
+    outDir: 'dist',
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
-        assetFileNames: 'assets/[name]-[hash][extname]', // Ensure asset names include the hash
-        entryFileNames: 'assets/[name]-[hash].js', // Ensure entry files include the hash
-        chunkFileNames: 'assets/[name]-[hash].js', // Ensure chunk files include the hash
-      },
-    },
-  },
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js'
+      }
+    }
+  }
 })

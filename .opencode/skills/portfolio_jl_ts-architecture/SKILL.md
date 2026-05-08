@@ -10,39 +10,58 @@ This file documents the high-level structure of the application.
 ## High-Level Directory Tree
 
 - `src/`
-  - `assets/` - Global styles and static assets
-    - `base.css`
-    - `main.css`
-    - `logo.svg`
-  - `components/` - Reusable UI components
-    - `AboutMe.vue`
+  - `app/` - Application bootstrap, global styles, router, providers
+    - `App.vue` - Root app shell with page transitions and scroll reveal
+    - `main.ts` - Entry point (createApp, plugins, mount)
+    - `styles/base.css` - Catppuccin Frappe/Mocha theme tokens
+    - `router/index.ts` - Single route: HomePage
+  - `pages/` - Page-level compositions for routes
+    - `HomePage.vue` - Assembles all feature sections
+  - `widgets/` - Complex reusable layout components
+    - `SiteHeader.vue` - Sticky nav, mobile drawer, scroll progress, active section
+    - `SiteFooter.vue` - Minimal footer with back-to-top
+  - `features/` - Self-contained business features (model + UI)
+    - `hero/ui/HeroSection.vue`
+    - `about/ui/AboutSection.vue`
+    - `skills/ui/SkillsSection.vue`
+    - `projects/ui/ProjectsSection.vue`
+    - `experience/ui/ExperienceSection.vue`
+    - `languages/ui/LanguagesSection.vue`
+    - `testimonials/ui/TestimonialsSection.vue`
+    - `blog/ui/BlogSection.vue`
+    - `contact/ui/ContactSection.vue`
+  - `entities/` - Domain models and types
+    - `profile/model/`
+      - `Profile.ts` - Singleton with resume data
+      - `ProgrammingLanguage.ts`
+      - `Hobby.ts`
+      - `Experience.ts`
+      - `Testimonial.ts`
+      - `BlogPost.ts`
+    - `project/model/types.ts` - GitHubRepo type
+  - `shared/` - Cross-cutting utilities, UI primitives, config
+    - `ui/` - `AppButton.vue`, `AppCard.vue`, `SectionHeader.vue`, `AppChip.vue`, `AppTag.vue`
+    - `lib/utils.ts` - `formatDate`, `useScrollReveal`
+    - `config/i18n.ts` - Vue-i18n with 4 locales
+    - `config/locales/` - `en.json`, `de.json`, `fr.json`, `it.json`
+  - `components/` - Remaining legacy reusable components
     - `AvatarComponent.vue`
-    - `NavBar.vue`
     - `icons/`
-  - `models/` - TypeScript models and interfaces
-    - `Hobbys.ts`
-    - `Language.ts`
-    - `Profile.ts`
-  - `router/` - Route definitions
-    - `index.ts`
+  - `assets/` - Global styles and static assets
+    - `base.css` (legacy, preserved)
+    - `main.css` (legacy, preserved)
+    - `logo.svg`
   - `stores/` - Pinia stores
-    - `counter.ts`
-  - `views/` - Page-level views
-    - `HomeView.vue`
-    - `LanguageView.vue`
-    - `ProfileView.vue`
-  - `App.vue`
-  - `main.ts`
 
 ## Key Modules & Responsibilities
 
-- **views/**: Page-level composition and layout for routes.
-- **components/**: Reusable UI blocks used by views.
-- **stores/**: Global state management using Pinia.
-- **models/**: Shared TypeScript data models.
-- **router/**: Application routes and navigation configuration.
-- **assets/**: Global CSS and static assets.
+- **pages/**: Route-level composition. Only HomePage exists.
+- **widgets/**: Complex UI blocks shared across pages (header, footer).
+- **features/**: Each section is a self-contained module with its own UI and domain data.
+- **entities/**: Typed domain models. Profile is a singleton holding all resume data.
+- **shared/**: Cross-cutting concerns — UI primitives, utilities, i18n configuration.
+- **app/**: Bootstrap layer — main.ts, App.vue, router, global styles.
 
 ## Data Flow
 
-Router -> View -> Components. Shared state lives in Pinia stores and is typed with models from `models/`.
+Router -> Page -> Widgets -> Features -> Entities. Shared state via Profile singleton. i18n messages loaded from JSON files.

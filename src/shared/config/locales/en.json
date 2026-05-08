@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "languages": "Languages",
+    "experience": "Experience",
+    "blog": "Blog",
+    "contact": "Contact",
+    "themeToggle": "Toggle dark mode",
+    "languageLabel": "Language"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "hero": {
+    "eyebrow": "Portfolio",
+    "greeting": "Hi, I'm",
+    "description": "I design and build thoughtful digital products across web, mobile, and backend systems. Based in Switzerland, available globally.",
+    "primaryCta": "View Projects",
+    "secondaryCta": "Start a Project",
+    "availabilityLabel": "Contact",
+    "availabilityTitle": "Available for new work"
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "Fullstack engineer with a passion for clean code and great user experiences.",
+    "focusTitle": "Focus",
+    "focusBody": "I build reliable products with an emphasis on performance, clean interfaces, and maintainable systems.",
+    "approachTitle": "Approach",
+    "approachBody": "From design systems to scalable APIs, I care about the details that make experiences feel effortless.",
+    "currentTitle": "Currently",
+    "currentBody": "Working as a Fullstack Engineer at EvoSys AG, building web apps and mentoring interns.",
+    "downloadCv": "Download CV"
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "My professional journey so far.",
+    "present": "Present"
+  },
+  "skills": {
+    "title": "Core Skills",
+    "subtitle": "Technical strengths and focus areas across the stack.",
+    "radarTitle": "Proficiency Overview"
+  },
+  "projects": {
+    "title": "Selected Projects",
+    "subtitle": "Top GitHub repositories, ranked by stars and recent activity.",
+    "filterAll": "All",
+    "error": "Unable to load GitHub projects right now.",
+    "noDescription": "No description provided.",
+    "view": "View on GitHub",
+    "updated": "Updated {date}"
+  },
+  "languages": {
+    "title": "Languages",
+    "subtitle": "Human and programming languages I speak.",
+    "humanTitle": "Human Languages",
+    "programmingTitle": "Programming Languages",
+    "experience": "{years} years experience",
+    "projects": "Projects: {projects}"
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "subtitle": "What colleagues say about working with me."
+  },
+  "blog": {
+    "title": "Latest Posts",
+    "subtitle": "Thoughts on tech, engineering, and building things.",
+    "readTime": "{min} min read",
+    "readMore": "Read more",
+    "backToPosts": "Back to posts",
+    "tags": "Tags"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Open to collaborations, freelance, and full-time roles.",
+    "cardTitle": "Let's build something thoughtful.",
+    "cardBody": "Based in Bern, Switzerland. Available remotely for global teams.",
+    "email": "Email me",
+    "copyEmail": "Copy email",
+    "copied": "Copied!",
+    "website": "Visit website"
+  },
+  "footer": {
+    "role": "Fullstack Engineer",
+    "backToTop": "Back to top"
+  }
+}
