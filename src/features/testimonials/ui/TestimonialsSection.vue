@@ -2,18 +2,18 @@
   <section id="testimonials" class="testimonials section reveal" :ref="setRef">
     <SectionHeader :title="t('testimonials.title')" :subtitle="t('testimonials.subtitle')" />
     <div class="testimonials__grid">
-      <AppCard v-for="(t, i) in testimonials" :key="i" class="testimonial-card" hoverable>
+      <AppCard v-for="(item, i) in testimonials" :key="i" class="testimonial-card" hoverable>
         <div class="testimonial-card__quote">
           <i class="pi pi-quote-left testimonial-card__icon"></i>
-          <p>{{ t.getQuote() }}</p>
+          <p>{{ item.quote }}</p>
         </div>
         <div class="testimonial-card__author">
           <div class="testimonial-card__avatar">
-            {{ t.getAuthor().charAt(0) }}
+            {{ item.author.charAt(0) }}
           </div>
           <div>
-            <p class="testimonial-card__name">{{ t.getAuthor() }}</p>
-            <p class="testimonial-card__role">{{ t.getRole() }}, {{ t.getCompany() }}</p>
+            <p class="testimonial-card__name">{{ item.author }}</p>
+            <p class="testimonial-card__role">{{ item.role }}, {{ item.company }}</p>
           </div>
         </div>
       </AppCard>
@@ -22,14 +22,20 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Profile } from '@/entities/profile/model/Profile'
 import SectionHeader from '@/shared/ui/SectionHeader.vue'
 import AppCard from '@/shared/ui/AppCard.vue'
 
-const { t } = useI18n()
-const profile = Profile.getInstance()
-const testimonials = profile.getTestimonials()
+interface TestimonialItem {
+  quote: string
+  author: string
+  role: string
+  company: string
+}
+
+const { t, tm } = useI18n()
+const testimonials = computed<TestimonialItem[]>(() => tm('testimonials.items') as TestimonialItem[])
 
 const setRef = (el: unknown) => {
   if (el instanceof HTMLElement) el.classList.add('reveal')

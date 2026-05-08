@@ -62,8 +62,28 @@
     "projects": "Projets : {projects}"
   },
   "testimonials": {
-    "title": "Temoignages",
-    "subtitle": "Ce que les collegues disent de travailler avec moi."
+    "title": "Témoignages",
+    "subtitle": "Ce que les clients disent de travailler avec moi.",
+    "items": [
+      {
+        "quote": "Joel a transformé notre tableau de bord interne obsolète en une application web moderne et responsive. Le projet a été livré dans les délais et la qualité a dépassé nos attentes.",
+        "author": "Elena R.",
+        "role": "Chef de projet",
+        "company": "Bern Innovations GmbH"
+      },
+      {
+        "quote": "Nous avons engagé Joel pour un projet mobile Flutter et il a livré une application cross-platform épatante en un temps record. Sa communication et ses compétences techniques sont remarquables.",
+        "author": "Marcus S.",
+        "role": "CTO",
+        "company": "AlpineTech Solutions"
+      },
+      {
+        "quote": "Joel a construit tout notre backend et frontend e-commerce à partir de zéro. Il était proactif, transparent et se souciait sincèrement du succès de notre produit.",
+        "author": "Anna B.",
+        "role": "Fondatrice",
+        "company": "GreenStart Initiative"
+      }
+    ]
   },
   "blog": {
     "title": "Derniers articles",

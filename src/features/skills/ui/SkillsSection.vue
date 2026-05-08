@@ -83,6 +83,7 @@ const skillGroups: { name: string; items: SkillItem[] }[] = [
 const setChartData = () => {
   const style = getComputedStyle(document.documentElement)
   const accent = style.getPropertyValue('--color-accent').trim()
+  const isDark = document.documentElement.classList.contains('theme-dark')
   return {
     labels: languages.map(l => l.getName()),
     datasets: [{
@@ -90,7 +91,7 @@ const setChartData = () => {
       borderColor: accent,
       pointBackgroundColor: accent,
       pointBorderColor: accent,
-      backgroundColor: accent + '20',
+      backgroundColor: isDark ? accent + '30' : accent + '25',
       data: languages.map(l => l.getSkillLevel())
     }]
   }
@@ -100,6 +101,7 @@ const setChartOptions = () => {
   const style = getComputedStyle(document.documentElement)
   const text = style.getPropertyValue('--color-ink').trim()
   const muted = style.getPropertyValue('--color-muted').trim()
+  const isDark = document.documentElement.classList.contains('theme-dark')
   return {
     plugins: {
       legend: { display: false }
@@ -111,10 +113,13 @@ const setChartOptions = () => {
         ticks: {
           stepSize: 1,
           color: muted,
-          backdropColor: 'transparent'
+          backdropColor: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.7)'
         },
-        grid: { color: muted + '30' },
-        pointLabels: { color: text }
+        grid: { color: isDark ? muted + '40' : muted + '55' },
+        pointLabels: {
+          color: text,
+          font: { size: 12, weight: '500' }
+        }
       }
     },
     maintainAspectRatio: true,
@@ -125,6 +130,12 @@ const setChartOptions = () => {
 onMounted(() => {
   chartData.value = setChartData()
   chartOptions.value = setChartOptions()
+
+  const observer = new MutationObserver(() => {
+    chartData.value = setChartData()
+    chartOptions.value = setChartOptions()
+  })
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 })
 
 const setRef = (el: unknown) => {
