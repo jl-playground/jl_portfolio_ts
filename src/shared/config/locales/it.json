@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "about": "Chi sono",
+    "skills": "Competenze",
+    "projects": "Progetti",
+    "languages": "Linguaggi",
+    "experience": "Esperienza",
+    "blog": "Blog",
+    "contact": "Contatto",
+    "themeToggle": "Attiva modalita scura",
+    "languageLabel": "Lingua"
+  },
+  "theme": {
+    "light": "Chiaro",
+    "dark": "Scuro"
+  },
+  "hero": {
+    "eyebrow": "Portfolio",
+    "greeting": "Ciao, sono",
+    "description": "Progetto e sviluppo prodotti digitali per web, mobile e backend con cura dei dettagli. In Svizzera, disponibile nel mondo.",
+    "primaryCta": "Vedi progetti",
+    "secondaryCta": "Inizia un progetto",
+    "availabilityLabel": "Contatto",
+    "availabilityTitle": "Disponibile per nuovi progetti"
+  },
+  "about": {
+    "title": "Chi sono",
+    "subtitle": "Ingegnere fullstack appassionato di codice pulito e UX eccellente.",
+    "focusTitle": "Focus",
+    "focusBody": "Creo prodotti affidabili con attenzione a performance, interfacce pulite e sistemi mantenibili.",
+    "approachTitle": "Approccio",
+    "approachBody": "Dai design system alle API scalabili, curo i dettagli che rendono l esperienza fluida.",
+    "currentTitle": "Ora",
+    "currentBody": "Ingegnere Fullstack presso EvoSys AG, sviluppo di web app e tutoraggio di stagisti.",
+    "downloadCv": "Scarica CV"
+  },
+  "experience": {
+    "title": "Esperienza",
+    "subtitle": "Il mio percorso professionale finora.",
+    "present": "Oggi"
+  },
+  "skills": {
+    "title": "Competenze chiave",
+    "subtitle": "Forza tecnica e focus lungo tutto lo stack.",
+    "radarTitle": "Panoramica competenze"
+  },
+  "projects": {
+    "title": "Progetti selezionati",
+    "subtitle": "Repository GitHub migliori per stelle e attivita recente.",
+    "filterAll": "Tutti",
+    "error": "Impossibile caricare i progetti GitHub.",
+    "noDescription": "Nessuna descrizione disponibile.",
+    "view": "Apri su GitHub",
+    "updated": "Aggiornato {date}"
+  },
+  "languages": {
+    "title": "Linguaggi",
+    "subtitle": "Lingue umane e linguaggi di programmazione.",
+    "humanTitle": "Lingue umane",
+    "programmingTitle": "Linguaggi di programmazione",
+    "experience": "{years} anni di esperienza",
+    "projects": "Progetti: {projects}"
+  },
+  "testimonials": {
+    "title": "Testimonianze",
+    "subtitle": "Cosa dicono i colleghi del lavorare con me."
+  },
+  "blog": {
+    "title": "Ultimi articoli",
+    "subtitle": "Riflessioni su tech, ingegneria e costruire cose.",
+    "readTime": "{min} min di lettura",
+    "readMore": "Leggi tutto",
+    "backToPosts": "Torna agli articoli",
+    "tags": "Tag"
+  },
+  "contact": {
+    "title": "Contatto",
+    "subtitle": "Aperto a collaborazioni, freelance e full time.",
+    "cardTitle": "Creiamo qualcosa di solido.",
+    "cardBody": "A Berna, Svizzera. Disponibile da remoto per team globali.",
+    "email": "Scrivimi",
+    "copyEmail": "Copia email",
+    "copied": "Copiato!",
+    "website": "Visita il sito"
+  },
+  "footer": {
+    "role": "Ingegnere Fullstack",
+    "backToTop": "Torna su"
+  }
+}
