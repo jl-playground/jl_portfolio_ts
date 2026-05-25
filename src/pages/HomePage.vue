@@ -7,7 +7,6 @@
       <ProjectsSection />
       <ExperienceSection />
       <LanguagesSection />
-      <TestimonialsSection />
       <BlogSection />
       <ContactSection />
     </div>
@@ -21,7 +20,6 @@ import SkillsSection from '@/features/skills/ui/SkillsSection.vue'
 import ProjectsSection from '@/features/projects/ui/ProjectsSection.vue'
 import ExperienceSection from '@/features/experience/ui/ExperienceSection.vue'
 import LanguagesSection from '@/features/languages/ui/LanguagesSection.vue'
-import TestimonialsSection from '@/features/testimonials/ui/TestimonialsSection.vue'
 import BlogSection from '@/features/blog/ui/BlogSection.vue'
 import ContactSection from '@/features/contact/ui/ContactSection.vue'
 </script>
