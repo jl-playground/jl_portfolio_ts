@@ -51,14 +51,11 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig
           chmod 600 kubeconfig
       - name: Replace and Apply Kubernetes Manifests
-        uses: swdotcom/update-and-apply-kubernetes-configs@v1
-        with:
-          k8-config-file-paths: |
-            ./k8s/namespace.yaml
-            ./k8s/envs.yaml
-            ./k8s/deploy.yaml
-            ./k8s/service.yaml
-            ./k8s/ingress.yaml
-          replacement-method: defined
+        run: |
+          command -v envsubst >/dev/null 2>&1 || { echo "envsubst not found"; exit 1; }
+          for file in namespace.yaml envs.yaml deploy.yaml service.yaml ingress.yaml; do
+            echo "--- Applying k8s/$file ---"
+            cat "k8s/$file" | envsubst | kubectl apply --validate=false -f -
+          done
         env:
           KUBECONFIG: kubeconfig
