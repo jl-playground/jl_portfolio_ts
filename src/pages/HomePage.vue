@@ -31,12 +31,12 @@ import ContactSection from '@/features/contact/ui/ContactSection.vue'
 }
 
 .home-page__container {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: var(--space-section);
 }
 
 .home-page__container .section:first-child {

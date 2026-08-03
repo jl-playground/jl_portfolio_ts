@@ -1,0 +1,31 @@
+[
+  {
+    "title": "From Wrench to Keyboard: What Three Years in Sheet Metal Taught Me About Software Engineering",
+    "url": "https://blog.stacktrace.space/from-wrench-to-keyboard-what-three-years-as-a-spengler-taught-me-about-software-engineering/",
+    "slug": "from-wrench-to-keyboard-what-three-years-as-a-spengler-taught-me-about-software-engineering",
+    "excerpt": "People at meetups sometimes do a small double-take when I tell them what I did before software. Sheet metal worker. That's the closest English term for it. In Switzerland the trade is called Spengler, and it covers roofs, gutters, fa&#xE7;ades, ventilation ducts, plumbing. Four...",
+    "date": "2026-08-03",
+    "tags": [
+      "career",
+      "career-change",
+      "personal",
+      "software-engineering"
+    ],
+    "featureImage": "https://blog.stacktrace.space/content/images/2026/08/stacktrace.space.wrench-2.jpg",
+    "readTimeMinutes": 6
+  },
+  {
+    "title": "Hello, world",
+    "url": "https://blog.stacktrace.space/hello-world/",
+    "slug": "hello-world",
+    "excerpt": "Hello, worldSo. A blog.I've been writing code for a while now and keeping notes in scattered places. Obsidian vaults, README files nobody reads, Discord messages I can't find three weeks later. At some point you either accept that your notes will live and die",
+    "date": "2026-08-03",
+    "tags": [
+      "meta",
+      "welcome",
+      "personal"
+    ],
+    "featureImage": null,
+    "readTimeMinutes": 2
+  }
+]

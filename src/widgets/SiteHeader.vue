@@ -225,12 +225,12 @@ onBeforeUnmount(() => {
   background: rgba(var(--color-bg), 0.7);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .site-header--scrolled {
   border-bottom-color: var(--color-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 0 var(--color-accent-glow);
 }
 
 .site-header__inner {
@@ -254,7 +254,9 @@ onBeforeUnmount(() => {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--color-accent);
+  background: var(--color-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: -0.02em;
 }
 
@@ -277,19 +279,27 @@ onBeforeUnmount(() => {
 }
 
 .site-header__link {
-  font-size: 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   transition: color 0.2s ease;
   position: relative;
 }
 
-.site-header__link:hover {
-  color: var(--color-ink);
-}
-
 .site-header__link--active {
   color: var(--color-accent);
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-accent-gradient);
+  }
 }
 
 .site-header__controls {
@@ -308,7 +318,6 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
-  border-radius: 10px;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-ink);
@@ -345,11 +354,9 @@ onBeforeUnmount(() => {
   min-width: 160px;
   background: var(--color-surface-raised);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
   padding: 0.4rem;
   list-style: none;
   z-index: 200;
-  box-shadow: var(--shadow-card);
 }
 
 .site-header__lang-item {
@@ -357,7 +364,6 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 0.6rem;
   padding: 0.5rem 0.75rem;
-  border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
   color: var(--color-ink);
@@ -401,7 +407,6 @@ onBeforeUnmount(() => {
 .site-header__theme {
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -421,7 +426,6 @@ onBeforeUnmount(() => {
   display: none;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 50%;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--color-border);

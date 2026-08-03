@@ -1,27 +1,26 @@
 <template>
   <section id="skills" class="skills section reveal" :ref="setRef">
-    <SectionHeader :title="t('skills.title')" :subtitle="t('skills.subtitle')" />
-    <div class="skills__layout">
+    <SectionHeader :title="t('skills.title')" :subtitle="t('skills.subtitle')" eyebrow="02 — Skills" />
+    <div class="skills__content">
       <div class="skills__groups">
-        <div v-for="group in skillGroups" :key="group.name" class="skills__group">
-          <h3 class="skills__group-title">{{ group.name }}</h3>
+        <div v-for="(group, groupIndex) in skillGroups" :key="group.name" class="skills__group">
+          <h3 class="skills__group-heading">
+            <span class="skills__group-num">0{{ groupIndex + 1 }}</span>{{ group.name }}
+          </h3>
           <div class="skills__list">
-            <div v-for="skill in group.items" :key="skill.name" class="skills__item">
-              <div class="skills__item-header">
-                <span class="skills__name">{{ skill.name }}</span>
-                <span class="skills__level-text">{{ skill.proficiency }}</span>
-              </div>
-              <div class="skills__bar">
+            <div v-for="skill in group.items" :key="skill.name" class="skills__row">
+              <span class="skills__name">{{ skill.name }}</span>
+              <div class="skills__track">
                 <div class="skills__bar-fill" :style="{ width: skill.skillLevel * 10 + '%' }"></div>
               </div>
+              <span class="skills__level">{{ skill.proficiency }}</span>
             </div>
           </div>
         </div>
       </div>
-      <AppCard class="skills__radar" hoverable>
-        <h3 class="skills__radar-title">{{ t('skills.radarTitle') }}</h3>
+      <div class="skills__radar-wrap">
         <Chart type="radar" :data="chartData" :options="chartOptions" class="skills__chart" />
-      </AppCard>
+      </div>
     </div>
   </section>
 </template>
@@ -33,7 +32,6 @@ import Chart from 'primevue/chart'
 import { Profile } from '@/entities/profile/model/Profile'
 import type { ProgrammingLanguage } from '@/entities/profile/model/ProgrammingLanguage'
 import SectionHeader from '@/shared/ui/SectionHeader.vue'
-import AppCard from '@/shared/ui/AppCard.vue'
 
 interface SkillItem {
   name: string
@@ -55,7 +53,7 @@ function toSkillItems(langs: ProgrammingLanguage[]): SkillItem[] {
 const skillGroups: { name: string; items: SkillItem[] }[] = [
   {
     name: 'Languages',
-    items: toSkillItems(languages.filter(l => ['JavaScript', 'TypeScript', 'Dart', 'Python', 'Java', 'Kotlin', 'Rust', 'Go', 'C#', 'Lua'].includes(l.getName())))
+    items: toSkillItems(languages.filter(l => ['JavaScript', 'TypeScript', 'Dart', 'Python', 'Java', 'Kotlin', 'Rust', 'Go', 'C#', 'C++', 'Lua'].includes(l.getName())))
   },
   {
     name: 'Frameworks & Platforms',
@@ -63,6 +61,7 @@ const skillGroups: { name: string; items: SkillItem[] }[] = [
       { name: 'Node.js', proficiency: 'Expert', skillLevel: 8 },
       { name: 'Vue.js', proficiency: 'Expert', skillLevel: 8 },
       { name: 'Flutter', proficiency: 'Expert', skillLevel: 7 },
+      { name: 'NestJS', proficiency: 'Expert', skillLevel: 7 },
       { name: 'Spring Boot', proficiency: 'Intermediate', skillLevel: 5 },
       { name: 'React', proficiency: 'Intermediate', skillLevel: 5 }
     ]
@@ -84,6 +83,7 @@ const setChartData = () => {
   const style = getComputedStyle(document.documentElement)
   const accent = style.getPropertyValue('--color-accent').trim()
   const isDark = document.documentElement.classList.contains('theme-dark')
+
   return {
     labels: languages.map(l => l.getName()),
     datasets: [{
@@ -144,87 +144,112 @@ const setRef = (el: unknown) => {
 </script>
 
 <style scoped>
-.skills__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.7fr);
-  gap: 2.5rem;
-  align-items: start;
+.skills__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 }
+
+/* ── Skill Groups ── */
 
 .skills__groups {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
-.skills__group-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+.skills__group-heading {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: 0.01em;
   margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skills__group-num {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-right: 0.5rem;
 }
 
 .skills__list {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 0.85rem;
 }
 
-.skills__item-header {
-  display: flex;
-  justify-content: space-between;
+.skills__row {
+  display: grid;
+  grid-template-columns: 140px 1fr 80px;
   align-items: center;
-  margin-bottom: 0.35rem;
+  gap: 1rem;
 }
 
 .skills__name {
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: var(--step--1);
+  color: var(--color-ink);
 }
 
-.skills__level-text {
-  font-size: 0.8rem;
-  color: var(--color-muted);
-}
-
-.skills__bar {
+.skills__track {
   height: 6px;
   background: var(--color-surface-raised);
-  border-radius: 999px;
+  border-radius: 0;
   overflow: hidden;
 }
 
 .skills__bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
-  border-radius: 999px;
+  background: var(--color-accent-gradient);
+  border-radius: 0;
+  box-shadow: 0 0 8px var(--color-accent-glow);
   transition: width 1s ease;
 }
 
-.skills__radar {
-  padding: 1.5rem;
+.skills__level {
+  font-size: var(--step--2);
+  color: var(--color-muted);
+  text-transform: capitalize;
+  text-align: right;
 }
 
-.skills__radar-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  text-align: center;
+/* ── Radar Chart ── */
+
+.skills__radar-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
 }
 
 .skills__chart {
-  max-height: 320px;
+  max-height: 360px;
+  width: 100%;
 }
 
-@media (max-width: 1024px) {
-  .skills__layout {
-    grid-template-columns: 1fr;
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .skills__row {
+    grid-template-columns: 1fr auto;
+    gap: 0.4rem 0.75rem;
   }
-  .skills__radar {
-    max-width: 500px;
-    margin: 0 auto;
+  .skills__name {
+    grid-column: 1;
+  }
+  .skills__level {
+    grid-column: 2;
+  }
+  .skills__track {
+    grid-column: 1 / -1;
   }
 }
 </style>

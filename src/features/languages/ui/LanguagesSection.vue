@@ -1,6 +1,6 @@
 <template>
   <section id="languages" class="languages section reveal" :ref="setRef">
-    <SectionHeader :title="t('languages.title')" :subtitle="t('languages.subtitle')" />
+    <SectionHeader :title="t('languages.title')" :subtitle="t('languages.subtitle')" eyebrow="05 — Languages" />
 
     <div class="languages__grid">
       <AppCard class="languages__panel" hoverable>
@@ -57,14 +57,12 @@ const programmingLanguages = profile.getLanguages()
 
 const humanLanguages = [
   { code: 'de', name: 'Deutsch', level: 'Muttersprache', percent: 100 },
-  { code: 'en', name: 'English', level: 'B2', percent: 80 },
+  { code: 'en', name: 'English', level: 'C1', percent: 85 },
   { code: 'fr', name: 'Français', level: 'B1', percent: 55 }
 ]
 
 const getProficiencyVariant = (p: string): string => {
-  if (p === 'Expert') return 'green'
-  if (p === 'Advanced') return 'blue'
-  if (p === 'Intermediate') return 'peach'
+  if (p === 'Expert' || p === 'Advanced') return 'accent'
   return 'default'
 }
 
@@ -117,23 +115,23 @@ const setRef = (el: unknown) => {
 
 .languages__human-bar,
 .languages__prog-bar {
-  height: 6px;
+  height: 4px;
   background: var(--color-surface-raised);
-  border-radius: 999px;
+  border-radius: 0;
   overflow: hidden;
 }
 
 .languages__human-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--ctp-teal), var(--ctp-green));
-  border-radius: 999px;
+  background: var(--color-accent-gradient);
+  border-radius: 0;
   transition: width 1s ease;
 }
 
 .languages__prog-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
-  border-radius: 999px;
+  background: var(--color-accent-gradient);
+  border-radius: 0;
   transition: width 1s ease;
 }
 

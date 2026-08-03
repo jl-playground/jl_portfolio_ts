@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run blog:fetch && vite",
+    "prebuild": "node scripts/fetch-blog-posts.mjs",
+    "blog:fetch": "node scripts/fetch-blog-posts.mjs",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -39,6 +41,7 @@
     "@vue/tsconfig": "^0.5.1",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
+    "fast-xml-parser": "^5.10.1",
     "npm-run-all2": "^6.2.0",
     "prettier": "^3.2.5",
     "sass": "^1.89.0",

@@ -14,29 +14,43 @@ withDefaults(defineProps<{
 })
 </script>
 
-<style scoped>
 .app-card {
+  position: relative;
+  overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-top: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
   padding: 1.5rem;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.3s ease;
+  box-shadow: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .app-card--hoverable:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card);
   border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--color-accent-glow);
+}
+
+.app-card--hoverable::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+  z-index: 1;
+}
+
+.app-card--hoverable:hover::before {
+  transform: scaleX(1);
 }
 
 .app-card--glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--color-surface);
+  border-color: var(--color-border);
 }
-
-.theme-dark .app-card--glass {
-  background: rgba(30, 30, 46, 0.6);
-}
-</style>
