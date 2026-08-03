@@ -18,13 +18,13 @@ defineEmits<{
   display: inline-flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  border-radius: 999px;
+  border-radius: var(--radius);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-muted);
+  background: transparent;
+  color: var(--color-ink);
   transition: all 0.2s ease;
   user-select: none;
 }
@@ -36,7 +36,7 @@ defineEmits<{
 
 .app-tag--active {
   background: var(--color-accent);
-  color: var(--ctp-crust);
+  color: #FFFFFF;
   border-color: var(--color-accent);
 }
 </style>

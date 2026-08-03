@@ -3,7 +3,6 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import SiteHeader from '@/widgets/SiteHeader.vue'
 import SiteFooter from '@/widgets/SiteFooter.vue'
-import ParticleCanvas from '@/shared/ui/ParticleCanvas.vue'
 import { useScrollReveal } from '@/shared/lib/utils'
 
 onMounted(() => {
@@ -14,7 +13,6 @@ onMounted(() => {
 
 <template>
   <div class="app-shell">
-    <ParticleCanvas />
     <SiteHeader />
     <RouterView v-slot="{ Component }">
       <transition name="page" mode="out-in">
@@ -35,12 +33,12 @@ onMounted(() => {
 
 /* Reveal animations: visible by default, hidden only when JS is active */
 .reveal {
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html.js .reveal:not(.is-visible) {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(16px) scale(0.98);
 }
 
 .section {

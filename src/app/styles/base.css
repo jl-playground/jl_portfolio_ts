@@ -1,94 +1,100 @@
-/* Catppuccin Frappe (light) / Mocha (dark) */
+/* Neutral + single electric-blue accent */
 
-/* === Frappe (Light) === */
+/* === Light === */
 :root {
-  --ctp-rosewater: #f2d5cf;
-  --ctp-flamingo: #eebebe;
-  --ctp-pink: #f4b8e4;
-  --ctp-mauve: #ca9ee6;
-  --ctp-red: #e78284;
-  --ctp-maroon: #ea999c;
-  --ctp-peach: #ef9f76;
-  --ctp-yellow: #e5c890;
-  --ctp-green: #a6d189;
-  --ctp-teal: #81c8be;
-  --ctp-sky: #99d1db;
-  --ctp-sapphire: #85c1dc;
-  --ctp-blue: #8caaee;
-  --ctp-lavender: #babbf1;
-  --ctp-text: #303446;
-  --ctp-subtext1: #51576d;
-  --ctp-subtext0: #626880;
-  --ctp-overlay2: #737994;
-  --ctp-overlay1: #838ba7;
-  --ctp-overlay0: #949cbb;
-  --ctp-surface2: #a5adce;
-  --ctp-surface1: #b5bfe2;
-  --ctp-surface0: #c6d0f5;
-  --ctp-base: #eff1f5;
-  --ctp-mantle: #e6e9ef;
-  --ctp-crust: #dce0e8;
+  --ctp-base: #FFFFFF;
+  --ctp-mantle: #F5F5F5;
+  --ctp-crust: #E5E5E5;
+  --ctp-text: #0A0A0A;
+  --ctp-subtext1: #404040;
+  --ctp-subtext0: #737373;
 
   --color-bg: var(--ctp-base);
   --color-surface: var(--ctp-mantle);
   --color-surface-raised: var(--ctp-crust);
   --color-ink: var(--ctp-text);
   --color-muted: var(--ctp-subtext0);
-  --color-border: rgba(48, 52, 70, 0.12);
-  --color-border-strong: rgba(48, 52, 70, 0.22);
-  --color-accent: var(--ctp-mauve);
-  --color-accent-soft: rgba(202, 158, 230, 0.18);
-  --color-accent-hover: var(--ctp-pink);
-  --shadow-soft: 0 10px 30px rgba(30, 30, 50, 0.08);
-  --shadow-card: 0 18px 50px rgba(30, 30, 50, 0.12);
-  --shadow-glow: 0 0 20px rgba(202, 158, 230, 0.35);
+  --color-border: rgba(10,10,10,0.10);
+  --color-border-strong: rgba(10,10,10,0.20);
+  --color-accent: #2563EB;
+  --color-accent-soft: rgba(37,99,235,0.10);
+  --color-accent-hover: #1D4ED8;
+  --color-accent-gradient: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  --color-accent-glow: 0 0 40px rgba(37,99,235,0.25);
+  --shadow-soft: none;
+  --shadow-card: none;
+  --shadow-glow: none;
 
-  --font-body: 'Work Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Literata', 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+
+  --radius: 0px;
+
+  /* Display type scale */
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5rem;
+  --step-3: 1.875rem;
+  --step-4: clamp(2.25rem, 1rem + 4vw, 4.5rem);
+  --step-5: clamp(3.5rem, 1rem + 9vw, 8rem);
+  --step-6: clamp(4rem, 1rem + 12vw, 10rem);
+
+  /* Spacing */
+  --measure: 68ch;
+  --space-section: clamp(5rem, 10vw, 8rem);
 }
 
-/* === Mocha (Dark) === */
+/* === Dark === */
 .theme-dark {
-  --ctp-rosewater: #f5e0dc;
-  --ctp-flamingo: #f2cdcd;
-  --ctp-pink: #f5c2e7;
-  --ctp-mauve: #cba6f7;
-  --ctp-red: #f38ba8;
-  --ctp-maroon: #eba0ac;
-  --ctp-peach: #fab387;
-  --ctp-yellow: #f9e2af;
-  --ctp-green: #a6e3a1;
-  --ctp-teal: #94e2d5;
-  --ctp-sky: #89dceb;
-  --ctp-sapphire: #74c7ec;
-  --ctp-blue: #89b4fa;
-  --ctp-lavender: #b4befe;
-  --ctp-text: #cdd6f4;
-  --ctp-subtext1: #bac2de;
-  --ctp-subtext0: #a6adc8;
-  --ctp-overlay2: #9399b2;
-  --ctp-overlay1: #7f849c;
-  --ctp-overlay0: #6c7086;
-  --ctp-surface2: #585b70;
-  --ctp-surface1: #45475a;
-  --ctp-surface0: #313244;
-  --ctp-base: #1e1e2e;
-  --ctp-mantle: #181825;
-  --ctp-crust: #11111b;
+  --ctp-base: #0A0A0A;
+  --ctp-mantle: #141414;
+  --ctp-crust: #1F1F1F;
+  --ctp-text: #FAFAFA;
+  --ctp-subtext1: #D4D4D4;
+  --ctp-subtext0: #A3A3A3;
 
   --color-bg: var(--ctp-base);
   --color-surface: var(--ctp-mantle);
   --color-surface-raised: var(--ctp-crust);
   --color-ink: var(--ctp-text);
   --color-muted: var(--ctp-subtext0);
-  --color-border: rgba(205, 214, 244, 0.12);
-  --color-border-strong: rgba(205, 214, 244, 0.22);
-  --color-accent: var(--ctp-mauve);
-  --color-accent-soft: rgba(203, 166, 247, 0.18);
-  --color-accent-hover: var(--ctp-pink);
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --shadow-card: 0 18px 50px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 20px rgba(203, 166, 247, 0.35);
+  --color-border: rgba(250,250,250,0.10);
+  --color-border-strong: rgba(250,250,250,0.20);
+  --color-accent: #3B82F6;
+  --color-accent-soft: rgba(59,130,246,0.12);
+  --color-accent-hover: #60A5FA;
+  --color-accent-gradient: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+  --color-accent-glow: 0 0 40px rgba(59,130,246,0.30);
+  --shadow-soft: none;
+  --shadow-card: none;
+  --shadow-glow: none;
+
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+
+  --radius: 0px;
+
+  /* Display type scale */
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5rem;
+  --step-3: 1.875rem;
+  --step-4: clamp(2.25rem, 1rem + 4vw, 4.5rem);
+  --step-5: clamp(3.5rem, 1rem + 9vw, 8rem);
+  --step-6: clamp(4rem, 1rem + 12vw, 10rem);
+
+  /* Spacing */
+  --measure: 68ch;
+  --space-section: clamp(5rem, 10vw, 8rem);
+}
+
+.accent-grid {
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 *,
@@ -111,6 +117,7 @@ body {
   line-height: 1.65;
   font-family: var(--font-body);
   font-size: 16px;
+  letter-spacing: -0.01em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

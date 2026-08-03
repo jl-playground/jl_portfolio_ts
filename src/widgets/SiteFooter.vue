@@ -63,7 +63,9 @@ const scrollTo = (id: string) => {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--color-accent);
+  background: var(--color-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .site-footer__role {
@@ -77,6 +79,7 @@ const scrollTo = (id: string) => {
 }
 
 .site-footer__links a {
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: var(--color-muted);
   transition: color 0.2s ease;
@@ -109,11 +112,12 @@ const scrollTo = (id: string) => {
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .site-footer__top:hover {
   color: var(--color-accent);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 640px) {

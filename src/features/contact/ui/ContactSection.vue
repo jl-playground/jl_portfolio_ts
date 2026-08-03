@@ -1,46 +1,40 @@
 <template>
   <section id="contact" class="contact section reveal" :ref="setRef">
-    <SectionHeader :title="t('contact.title')" :subtitle="t('contact.subtitle')" />
-    <div class="contact__layout">
-      <AppCard class="contact__card contact__card--main" glass hoverable>
-        <h3 class="contact__card-title">{{ t('contact.cardTitle') }}</h3>
-        <p class="contact__card-body">{{ t('contact.cardBody') }}</p>
+    <SectionHeader :title="t('contact.title')" :subtitle="t('contact.subtitle')" eyebrow="07 — Contact" />
+
+    <AppCard class="contact__card">
+      <h2 class="contact__heading">{{ t('contact.cardTitle') }}</h2>
+      <p class="contact__body">{{ t('contact.cardBody') }}</p>
+
+      <div class="contact__email-group">
+        <button class="contact__email-link" @click="copyEmail" type="button">
+          <i class="pi pi-copy contact__icon"></i>
+          <span class="contact__email-text">{{ contact.email }}</span>
+          <span v-if="copied" class="contact__copied">{{ t('contact.copied') }}</span>
+        </button>
         <div class="contact__actions">
-          <AppButton variant="primary" @click="copyEmail">
-            <i class="pi pi-copy"></i>
-            {{ copied ? t('contact.copied') : t('contact.copyEmail') }}
-          </AppButton>
-          <AppButton variant="ghost" @click="openEmail">
+          <AppButton variant="primary" @click="openEmail">
             <i class="pi pi-envelope"></i>
             {{ t('contact.email') }}
           </AppButton>
         </div>
-      </AppCard>
-
-      <div class="contact__side">
-        <AppCard class="contact__side-card" hoverable>
-          <div class="contact__side-header">
-            <i class="pi pi-map-marker"></i>
-            <span>Location</span>
-          </div>
-          <p>Bern, Switzerland</p>
-        </AppCard>
-        <AppCard class="contact__side-card" hoverable>
-          <div class="contact__side-header">
-            <i class="pi pi-briefcase"></i>
-            <span>Experience</span>
-          </div>
-          <p>Fullstack Engineer at EvoSys AG</p>
-        </AppCard>
-        <AppCard class="contact__side-card" hoverable>
-          <div class="contact__side-header">
-            <i class="pi pi-graduation-cap"></i>
-            <span>Education</span>
-          </div>
-          <p>Computer Schule Bern — EFZ Applikationsentwicklung</p>
-        </AppCard>
       </div>
-    </div>
+
+      <div class="contact__info">
+        <div class="contact__info-item">
+          <i class="pi pi-map-marker"></i>
+          <span>Bern, Switzerland</span>
+        </div>
+        <div class="contact__info-item">
+          <i class="pi pi-briefcase"></i>
+          <span>Fullstack Engineer at EvoSys AG</span>
+        </div>
+        <div class="contact__info-item">
+          <i class="pi pi-graduation-cap"></i>
+          <span>Computer Schule Bern</span>
+        </div>
+      </div>
+    </AppCard>
   </section>
 </template>
 
@@ -63,7 +57,6 @@ const copyEmail = async () => {
     copied.value = true
     setTimeout(() => (copied.value = false), 2000)
   } catch {
-    // Fallback
     window.open(`mailto:${contact.email}`, '_self')
   }
 }
@@ -78,84 +71,114 @@ const setRef = (el: unknown) => {
 </script>
 
 <style scoped>
-.contact__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.5fr);
-  gap: 2rem;
-  align-items: start;
+.contact__card {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+  text-align: center;
 }
 
-.contact__card--main {
-  padding: 2.5rem;
+.contact__heading {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.contact__body {
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: var(--measure);
+  margin: 0 auto 2rem;
+}
+
+.contact__email-group {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
 }
 
-.contact__card-title {
-  font-size: 1.5rem;
+.contact__email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--color-accent);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease;
+}
+
+.contact__email-link:hover {
+  background-color: var(--color-accent-soft);
+}
+
+.contact__icon {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.contact__email-text {
+  letter-spacing: 0.01em;
+}
+
+.contact__copied {
+  font-size: 0.8rem;
+  color: var(--color-accent);
   font-weight: 600;
-}
-
-.contact__card-body {
-  color: var(--color-muted);
-  line-height: 1.7;
-  max-width: 500px;
+  margin-left: 0.25rem;
 }
 
 .contact__actions {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  justify-content: center;
 }
 
-.contact__side {
+.contact__info {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
 }
 
-.contact__side-card {
-  padding: 1.25rem;
-}
-
-.contact__side-header {
-  display: flex;
+.contact__info-item {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
+  gap: 0.4rem;
+  font-size: 0.875rem;
   color: var(--color-muted);
 }
 
-.contact__side-header i {
+.contact__info-item i {
   color: var(--color-accent);
+  font-size: 0.85rem;
+  opacity: 0.8;
 }
 
-.contact__side-card p {
-  font-size: 0.95rem;
-  color: var(--color-ink);
-}
-
-@media (max-width: 1024px) {
-  .contact__layout {
-    grid-template-columns: 1fr;
+@media (max-width: 640px) {
+  .contact__card {
+    padding: 2rem 1.25rem;
   }
-  .contact__side {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-}
 
-@media (max-width: 768px) {
-  .contact__actions {
+  .contact__heading {
+    font-size: var(--step-1);
+  }
+
+  .contact__info {
     flex-direction: column;
-    align-items: flex-start;
-  }
-  .contact__side {
-    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 0.75rem;
   }
 }
 </style>

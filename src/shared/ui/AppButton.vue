@@ -26,9 +26,10 @@ withDefaults(defineProps<{
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius);
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: var(--step-0);
+  font-family: var(--font-body);
   border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -37,14 +38,12 @@ withDefaults(defineProps<{
 
 .app-button--primary {
   background: var(--color-accent);
-  color: var(--ctp-crust);
-  box-shadow: var(--shadow-card);
+  color: #FFFFFF;
+  font-weight: 600;
 }
 
 .app-button--primary:hover:not(:disabled) {
   background: var(--color-accent-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-glow);
 }
 
 .app-button--ghost {
@@ -54,7 +53,6 @@ withDefaults(defineProps<{
 }
 
 .app-button--ghost:hover:not(:disabled) {
-  background: var(--color-surface);
   border-color: var(--color-accent);
 }
 
